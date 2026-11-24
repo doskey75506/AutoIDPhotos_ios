@@ -1,0 +1,37 @@
+.DS_Store
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.ipa
+*.mobileprovision
+*.p12
+
+.model-tools/
+__pycache__/
+*.pending.mlmodel
+
+# Local environments and caches
+.venv/
+venv/
+*.py[cod]
+.swiftpm/
+.build/
+
+# Machine-local configuration and signing material
+.env
+.env.*
+!.env.example
+*.xcconfig.local
+*.p8
+*.pem
+*.key
+*.cer
+*.der
+*.provisionprofile
+
+# Build products and local editor state
+*.xcarchive/
+*.dSYM/
+.vscode/
+.idea/

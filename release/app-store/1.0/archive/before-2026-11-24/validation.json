@@ -1,0 +1,70 @@
+{
+  "en-GB": {
+    "promotional-text": {
+      "characters": 140,
+      "utf8_bytes": 140,
+      "utf16_code_units": 140,
+      "limit": 170,
+      "limit_unit": "characters",
+      "status": "within limit"
+    },
+    "keywords": {
+      "characters": 84,
+      "utf8_bytes": 84,
+      "utf16_code_units": 84,
+      "limit": 100,
+      "limit_unit": "UTF-8 bytes",
+      "status": "within limit"
+    },
+    "description": {
+      "characters": 1522,
+      "utf8_bytes": 1524,
+      "utf16_code_units": 1522,
+      "limit": 4000,
+      "limit_unit": "characters",
+      "status": "within limit"
+    },
+    "whats-new": {
+      "characters": 0,
+      "utf8_bytes": 0,
+      "utf16_code_units": 0,
+      "limit": 4000,
+      "limit_unit": "characters",
+      "status": "not available for first release; empty intentionally"
+    }
+  },
+  "zh-Hans": {
+    "promotional-text": {
+      "characters": 59,
+      "utf8_bytes": 159,
+      "utf16_code_units": 59,
+      "limit": 170,
+      "limit_unit": "characters",
+      "status": "within limit"
+    },
+    "keywords": {
+      "characters": 34,
+      "utf8_bytes": 90,
+      "utf16_code_units": 34,
+      "limit": 100,
+      "limit_unit": "UTF-8 bytes",
+      "status": "within limit"
+    },
+    "description": {
+      "characters": 496,
+      "utf8_bytes": 1360,
+      "utf16_code_units": 496,
+      "limit": 4000,
+      "limit_unit": "characters",
+      "status": "within limit"
+    },
+    "whats-new": {
+      "characters": 0,
+      "utf8_bytes": 0,
+      "utf16_code_units": 0,
+      "limit": 4000,
+      "limit_unit": "characters",
+      "status": "not available for first release; empty intentionally"
+    }
+  }
+}

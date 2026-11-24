@@ -1,0 +1,4 @@
+"CFBundleDisplayName" = "证件照拼版";
+"NSCameraUsageDescription" = "拍摄用于制作证件照的人像照片。";
+"NSPhotoLibraryAddUsageDescription" = "将生成的单张证件照和打印拼版保存到相册。";
+"NSPhotoLibraryUsageDescription" = "允许访问照片图库，以选择原始照片并保存生成的证件照和打印拼版。";

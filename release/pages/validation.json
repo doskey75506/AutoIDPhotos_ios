@@ -1,0 +1,42 @@
+{
+  "checked_date": "2026-11-24",
+  "status": "local draft; not published",
+  "files": {
+    "index.html": {
+      "balanced_html": true,
+      "internal_links_and_anchors": "passed",
+      "single_h1": true,
+      "english_and_simplified_chinese": true,
+      "scripts": 0,
+      "external_assets": 0
+    },
+    "privacy.html": {
+      "balanced_html": true,
+      "internal_links_and_anchors": "passed",
+      "single_h1": true,
+      "english_and_simplified_chinese": true,
+      "scripts": 0,
+      "external_assets": 0
+    }
+  },
+  "assets": [
+    "style.css",
+    "app-icon.png",
+    ".nojekyll"
+  ],
+  "git_repository": false,
+  "remote": "git@github.com:doskey75506/AutoIDPhotos_ios.git",
+  "support_url": null,
+  "privacy_url": null,
+  "pending": [
+    "Public support contact",
+    "Public developer identity / support data handling confirmation"
+  ],
+  "browser_visual_check": "not run: npx/playwright-cli not available",
+  "publication": "draft page source upload authorized; no Pages setup performed; live URLs not verified; public contact pending",
+  "expected_support_url": "https://doskey75506.github.io/AutoIDPhotos_ios/",
+  "expected_privacy_url": "https://doskey75506.github.io/AutoIDPhotos_ios/privacy.html",
+  "upload_method": "independent writable checkout under /private/tmp; original workspace .git protected",
+  "remote_empty_before_first_upload": true,
+  "source_branch": "main"
+}

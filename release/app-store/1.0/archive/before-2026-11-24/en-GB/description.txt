@@ -1,0 +1,23 @@
+Create ID photos and arrange them on a print sheet, with control over the portrait, dimensions and background.
+
+CAPTURE OR CHOOSE A PHOTO
+Use the built-in live camera preview or select an image from your photo library. The camera starts with the front lens, with a button to switch between front and rear cameras.
+
+DETECT AND ADJUST
+After capture or import, automatic face detection sets a head box. Drag the box to move it or drag a corner to resize it. Check the crown, chin and head position before generating your photo.
+
+CHOOSE THE BACKGROUND
+Keep the original background or use portrait cutout to replace it with white or light grey. Check the hair, shoulders and other edges in the preview.
+
+CONTROL THE DIMENSIONS
+Set the photo width and height, crown-to-chin height range, paper size, DPI and spacing. The default layout places eight 35 × 45 mm photos on a 6 × 4 inch sheet. Generate a new sheet after changing the settings.
+
+EXPORT YOUR RESULTS
+Export a single ID photo as a JPEG, save the print sheet to Photos, or share the sheet as JPEG and PDF. Grey spacing makes individual photo boundaries easier to see when cutting.
+
+ENGLISH AND SIMPLIFIED CHINESE
+English is the default interface. Switch languages using the globe button; your choice is remembered.
+
+Image processing takes place on your device. Photos are not uploaded for processing.
+
+For printing, select the matching paper size, use 100% / actual size and turn off automatic page fitting or enlargement. Check the final photo dimensions with a ruler.

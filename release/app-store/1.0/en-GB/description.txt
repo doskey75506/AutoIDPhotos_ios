@@ -1,0 +1,25 @@
+Create single ID photos and multi-photo print sheets, with control over dimensions, head position and background.
+
+START WITH YOUR SETTINGS
+Each launch begins with specification settings and a short four-step guide. Confirm photo size, head-height range, background and paper size before opening the camera. Settings are remembered. English is the default interface; switch to Simplified Chinese using the globe button.
+
+CAPTURE OR CHOOSE A PHOTO
+Use the live camera preview, starting with the front camera, or choose an image from your photo library. Switch between front and rear cameras when taking a photo.
+
+DETECT AND ADJUST
+After capture or import, face detection sets a head box. Move the box or resize its corners to align the crown, chin and head position. As you adjust the box, green indicates that the crop fits the current settings; red explains a framing problem. This checks crop space, not background quality or acceptance of the finished photo.
+
+CHOOSE YOUR BACKGROUND
+Keep the original background or use portrait cutout with white, light grey, blue or red. With a replacement background, missing space above the source image can be filled in the selected colour; the head, sides and bottom must still fit. Check hair and shoulder edges in the generated preview.
+
+CONTROL SIZE AND RESOLUTION
+Adjust photo dimensions, head-height range, paper size and spacing. Defaults arrange eight 35 × 45 mm photos on a 6 × 4 inch sheet. Generate a new sheet after changing settings.
+
+By default, the single photo keeps the source crop's pixel dimensions. Alternatively, choose a fixed DPI. JPEG files include DPI metadata for the selected physical size. Print-sheet JPEGs are limited to 20 megapixels; the PDF uses the single photo's full generated resolution without that sheet limit. Preview captions show the JPEG pixel dimensions.
+
+SAVE OR SHARE
+Export a single JPEG or a print sheet as JPEG or PDF. Each photo's share menu offers Save to Photos and photo-access controls, with a shortcut to system settings when permission needs attention. Grey spacing separates photos; cutting marks appear when space allows.
+
+Image processing takes place on your device. Photos are not uploaded for processing.
+
+Requires iOS 17 or later. For printing, use matching paper, 100% / actual size and no automatic page fitting or enlargement. Prefer PDF and check the printed dimensions with a ruler.

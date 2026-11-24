@@ -1,0 +1,1 @@
+background,resize,layout,jpeg,pdf,selfie,dimensions,camera,spacing,resolution

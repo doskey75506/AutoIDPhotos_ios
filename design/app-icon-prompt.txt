@@ -1,0 +1,10 @@
+Generation mode: built-in image_gen tool
+Asset: AutoID Photo iOS app icon, version 1
+
+Final prompt:
+Use case: logo-brand. Asset type: final iOS App Store app icon for a general-purpose ID photo maker, AutoID Photo. Create ONE polished square 1024x1024 icon, full bleed, perfectly opaque. Existing UI uses teal, so use a rich deep teal background with very subtle smooth depth and an elegant white / pale mint central mark. Main symbol: a bold, simple, friendly anonymous head-and-shoulders silhouette centered inside a portrait-oriented photo crop frame, four confident crop corner brackets, visually integrated as one coherent logo. Strong silhouette, generous breathing room, premium restrained modern graphic design, crisp vector-like edges, legible at 48px. No text, letters, numbers, flags, passports, government badges, camera lens, magic wand, sparkles, watermark, mockup, external shadow, rounded app tile boundary, transparent pixels, or surrounding margin. Fill the entire square background edge to edge; iOS will mask the corners. Straight-on flat graphic, minimal and distinctive, not a 3D product rendering.
+
+Project files:
+Original generation: design/app-icon-master-v1.png
+Shipping icon: AutoIDPhoto/Assets.xcassets/AppIcon.appiconset/AppIcon.png
+Packaging: scripts/prepare_app_icon.swift scales to 1024x1024 and writes an opaque sRGB PNG; no content edits.

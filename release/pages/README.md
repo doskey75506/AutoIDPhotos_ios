@@ -1,0 +1,68 @@
+# GitHub Pages · ID Photo Maker / 证件照拼版
+
+Prepared: 2026-11-24. Target: current AutoIDPhoto workspace, iOS app version 1.0, bundle `com.jialishen.AutoIDPhoto`.
+
+## Delivery and current status
+
+- `docs/index.html`: English / Simplified Chinese support page, four-step guide, current feature FAQs and a contact section.
+- `docs/privacy.html`: bilingual privacy policy based on the current implementation.
+- `docs/style.css`, `docs/app-icon.png`, `docs/.nojekyll`: local-only assets and static Pages configuration. The icon is copied from the app's current approved icon asset.
+- `release/pages/validation.json`: actual validation results and pending information.
+
+**Local drafts; not verified as a live Pages site.** The user supplied the existing repository `git@github.com:doskey75506/AutoIDPhotos_ios.git` on 2026-11-24 and authorized uploading local app code and page sources. The remote was verified by SSH as empty before this first upload. Source upload uses an independent checkout under `/private/tmp` because this workspace does not permit creation of its local `.git` directory. The original workspace remains without Git metadata; no Pages deployment or reachable public URL is asserted here. Developer identity and contact information are still pending.
+
+Repository: https://github.com/doskey75506/AutoIDPhotos_ios
+
+Expected project-site URLs if Pages is enabled from this repository without a custom domain (not verified live):
+
+- Support: `https://doskey75506.github.io/AutoIDPhotos_ios/`
+- Privacy: `https://doskey75506.github.io/AutoIDPhotos_ios/privacy.html`
+- Pages configuration: https://github.com/doskey75506/AutoIDPhotos_ios/settings/pages
+
+Both pages visibly mark this status and have `noindex,nofollow`. They contain no fabricated email, repository or working contact link. Do not use them in Connect before completing the contact section and deployment.
+
+## Information required to finish
+
+1. Repository URL is now confirmed above. Check the actual remote branch/history and Pages configuration before pushing or enabling deployment.
+2. Public support email, or an existing enabled GitHub Issues entry confirmed as the intended support channel.
+3. Public developer/operator name for the policy and actual handling/retention of messages sent to support. The app's local-photo retention is already evidenced below; a support mailbox's practices cannot be inferred from app code.
+
+Once confirmed, replace draft/contact notes in both languages, finalize the policy contact/retention text and remove draft-only robots metadata. Check the identified repository's real branch, Pages source and CNAME before integrating. Stage only the page assets and relevant documentation; preserve other project changes. Do not publish pending privacy statements.
+
+## Privacy facts checked
+
+| Topic | Evidence and wording |
+| --- | --- |
+| Local image processing | `PhotoProcessor.swift`, `MODNetMatting.swift`, `BackgroundCompositor.swift`: Vision/Core ML inference and compositing on device. No image-processing upload API was found. |
+| Head geometry | `HeadPlacement`, detection, foreground mask: local crop/foreground processing, not personal identity matching; no model-training path. |
+| Camera | `CameraController.swift`: preview/capture only; session stops on exit/background flows. |
+| Photo library | `ContentView.swift`, `PhotoModel.swift`: system picker; `.readWrite` authorization for saving/access check; limited and full status paths; no bulk library fetching. |
+| In-memory editing | `PhotoModel.swift`: image, generated output and placement in observable memory; no edit-project persistence. |
+| Persisted settings | `PhotoModel.swift`, `AppLanguage.swift`: `UserDefaults` photo settings and language. |
+| Export retention | `prepareShare` writes UUID-named temporary JPEG/PDF files; no immediate per-share cleanup. Policy explicitly discloses this. |
+| Saved and shared copies | Photos creation requests and activity controller; user-selected recipient/storage, iCloud Photos and other system settings can transfer copies. No blanket claim that data never leaves the device. |
+| External SDKs/accounts | Current Xcode project has no external package integration; current Swift source has no account/login, advertising SDK or developer analytics path. These facts must be reviewed if dependencies/features change. |
+| Backups/deletion | No custom backup exclusion or delete-all control observed. Policy distinguishes deleting app/data, offloading, external copies and backups. It makes no claim that uninstalling removes cloud copies. |
+| Website | Static relative assets, no scripts, forms, advertising, analytics or external fonts. GitHub hosting may process technical request information separately. |
+
+## Validation performed
+
+The local HTML was parsed and checked for balanced elements, a single main page heading, both language sections, unique anchors, existing relative links and assets, and absence of scripts/external resource loads. Both pages passed. Existing app/source tests were not rerun because no app code was changed.
+
+A browser/phone-width visual check was not completed: this environment has neither `npx` nor `playwright-cli`. No screenshot or browser verification is claimed. Visual review is still required before publication.
+
+## Publishing after the missing information is resolved
+
+1. Inspect the actual GitHub repository and keep its existing branch/protected-branch workflow, Pages configuration and custom domain.
+2. Finalize the uploaded draft `docs/` pages with the confirmed contact information. Commit and push only those authorized page changes through that workflow. The initial app-code upload does not make draft pages ready as a Support or Privacy Policy URL.
+3. For a repository without an existing Pages setup, go to its **Settings → Pages → Build and deployment → Source: Deploy from a branch**, select the **actual pushed branch** and **/docs**, then Save. Retain an existing Actions-based deployment instead of replacing it.
+4. Read the deployed URL from Pages. A project site normally uses `https://<owner>.github.io/<repo>/`, while a user/organization root site or custom domain differs. These are templates, not this project's verified URLs.
+5. The Support URL is the actual deployed site root; the Privacy Policy URL is that root plus `privacy.html`. Do not include `docs/` in the deployed URL.
+6. Request both public URLs, confirm successful responses and actual page content, then fill Connect. A push alone does not prove deployment.
+
+## Official references checked on 2026-11-24
+
+- [Apple App Review Guidelines](https://developer.apple.com/app-store/review/guidelines/): accessible support/contact information and privacy-policy disclosures including retention/deletion.
+- [Apple App Review](https://developer.apple.com/app-store/review/): support and privacy policy links for apps.
+- [GitHub: Configure a Pages publishing source](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site): branch and `/docs` source configuration.
+- [GitHub General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement): hosting-service request/technical information, separate from app-local processing.

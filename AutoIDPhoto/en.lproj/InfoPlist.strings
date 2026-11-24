@@ -1,0 +1,4 @@
+"CFBundleDisplayName" = "ID Photo Maker";
+"NSCameraUsageDescription" = "Take a portrait photo to create an ID photo.";
+"NSPhotoLibraryAddUsageDescription" = "Save generated ID photos and print sheets to your photo library.";
+"NSPhotoLibraryUsageDescription" = "Allow photo library access to select source photos and save generated ID photos and print sheets.";
