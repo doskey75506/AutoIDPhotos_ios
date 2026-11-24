@@ -1,6 +1,6 @@
 {
   "checked_date": "2026-11-24",
-  "status": "local draft; not published",
+  "status": "page content complete; live Pages deployment not verified",
   "files": {
     "index.html": {
       "balanced_html": true,
@@ -29,14 +29,17 @@
   "support_url": null,
   "privacy_url": null,
   "pending": [
-    "Public support contact",
-    "Public developer identity / support data handling confirmation"
+    "GitHub Pages configuration and verification of both public URLs",
+    "Install shared page agent defaults from a normal terminal"
   ],
   "browser_visual_check": "not run: npx/playwright-cli not available",
-  "publication": "draft page source upload authorized; no Pages setup performed; live URLs not verified; public contact pending",
+  "publication": "updated page source ready to push; no Pages setup performed; live URLs not verified",
   "expected_support_url": "https://doskey75506.github.io/AutoIDPhotos_ios/",
   "expected_privacy_url": "https://doskey75506.github.io/AutoIDPhotos_ios/privacy.html",
   "upload_method": "independent writable checkout under /private/tmp; original workspace .git protected",
   "remote_empty_before_first_upload": true,
-  "source_branch": "main"
+  "source_branch": "main",
+  "developer": "Mobile Soft",
+  "support_email": "shenok.smth@gmail.com",
+  "shared_agent_defaults_installed": false
 }

@@ -9,7 +9,9 @@ Prepared: 2026-11-24. Target: current AutoIDPhoto workspace, iOS app version 1.0
 - `docs/style.css`, `docs/app-icon.png`, `docs/.nojekyll`: local-only assets and static Pages configuration. The icon is copied from the app's current approved icon asset.
 - `release/pages/validation.json`: actual validation results and pending information.
 
-**Local drafts; not verified as a live Pages site.** The user supplied the existing repository `git@github.com:doskey75506/AutoIDPhotos_ios.git` on 2026-11-24 and authorized uploading local app code and page sources. The remote was verified by SSH as empty before this first upload. Source upload uses an independent checkout under `/private/tmp` because this workspace does not permit creation of its local `.git` directory. The original workspace remains without Git metadata; no Pages deployment or reachable public URL is asserted here. Developer identity and contact information are still pending.
+**Page content is complete; live Pages deployment has not been verified.** The user confirmed developer **Mobile Soft** and support email **shenok.smth@gmail.com** on 2026-11-24. The initial app/source upload is already on `main` in the repository below. Updated pages remove their draft banner and include contact links and support-email handling. No Pages setup action or successful public response is claimed here.
+
+Source upload uses an independent checkout under `/private/tmp` because the workspace does not permit creation of its local `.git` directory. The original workspace remains without Git metadata.
 
 Repository: https://github.com/doskey75506/AutoIDPhotos_ios
 
@@ -19,15 +21,14 @@ Expected project-site URLs if Pages is enabled from this repository without a cu
 - Privacy: `https://doskey75506.github.io/AutoIDPhotos_ios/privacy.html`
 - Pages configuration: https://github.com/doskey75506/AutoIDPhotos_ios/settings/pages
 
-Both pages visibly mark this status and have `noindex,nofollow`. They contain no fabricated email, repository or working contact link. Do not use them in Connect before completing the contact section and deployment.
+## Confirmed defaults and remaining deployment work
 
-## Information required to finish
-
-1. Repository URL is now confirmed above. Check the actual remote branch/history and Pages configuration before pushing or enabling deployment.
-2. Public support email, or an existing enabled GitHub Issues entry confirmed as the intended support channel.
-3. Public developer/operator name for the policy and actual handling/retention of messages sent to support. The app's local-photo retention is already evidenced below; a support mailbox's practices cannot be inferred from app code.
-
-Once confirmed, replace draft/contact notes in both languages, finalize the policy contact/retention text and remove draft-only robots metadata. Check the identified repository's real branch, Pages source and CNAME before integrating. Stage only the page assets and relevant documentation; preserve other project changes. Do not publish pending privacy statements.
+- Developer: **Mobile Soft**.
+- Public support/privacy email: **shenok.smth@gmail.com**.
+- These values are user-confirmed defaults for subsequent page tasks. Do not ask again unless the user supplies a project-specific replacement.
+- `agent-config/page/page.toml` and `agent-config/page/page` contain updated, reviewable agent instruction copies. Writing the shared iOS agent configuration was denied by this session's filesystem restrictions; it is not yet installed there. Run `python3 agent-config/page/install-defaults.py` in a normal terminal to merge the defaults into the existing shared configuration and entry file.
+- The page policy distinguishes on-device image processing from messages deliberately sent through Gmail; it does not invent a fixed mailbox deletion schedule. It provides the confirmed email for deletion requests.
+- Pages must still be enabled or its current configuration inspected, then the two actual public URLs checked before filling Connect. Page source and app code in Git are not proof of deployment.
 
 ## Privacy facts checked
 
@@ -51,10 +52,10 @@ The local HTML was parsed and checked for balanced elements, a single main page 
 
 A browser/phone-width visual check was not completed: this environment has neither `npx` nor `playwright-cli`. No screenshot or browser verification is claimed. Visual review is still required before publication.
 
-## Publishing after the missing information is resolved
+## Publishing
 
 1. Inspect the actual GitHub repository and keep its existing branch/protected-branch workflow, Pages configuration and custom domain.
-2. Finalize the uploaded draft `docs/` pages with the confirmed contact information. Commit and push only those authorized page changes through that workflow. The initial app-code upload does not make draft pages ready as a Support or Privacy Policy URL.
+2. Commit and push the confirmed `docs/` pages through that workflow. Source availability alone does not make the Support or Privacy Policy URL publicly reachable.
 3. For a repository without an existing Pages setup, go to its **Settings → Pages → Build and deployment → Source: Deploy from a branch**, select the **actual pushed branch** and **/docs**, then Save. Retain an existing Actions-based deployment instead of replacing it.
 4. Read the deployed URL from Pages. A project site normally uses `https://<owner>.github.io/<repo>/`, while a user/organization root site or custom domain differs. These are templates, not this project's verified URLs.
 5. The Support URL is the actual deployed site root; the Privacy Policy URL is that root plus `privacy.html`. Do not include `docs/` in the deployed URL.
@@ -66,3 +67,5 @@ A browser/phone-width visual check was not completed: this environment has neith
 - [Apple App Review](https://developer.apple.com/app-store/review/): support and privacy policy links for apps.
 - [GitHub: Configure a Pages publishing source](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site): branch and `/docs` source configuration.
 - [GitHub General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement): hosting-service request/technical information, separate from app-local processing.
+
+- [Google Privacy Policy](https://policies.google.com/privacy): privacy information for the Gmail channel used for voluntary support messages.
