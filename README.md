@@ -121,6 +121,8 @@ cd /Users/jialishen/Coding/IOS/AutoIDPhoto
 
 ## 支持页与隐私政策
 
-中英文静态页面位于 `docs/index.html` 和 `docs/privacy.html`，发布说明及隐私依据见 [Pages 交付说明](release/pages/README.md)。GitHub 仓库为 [doskey75506/AutoIDPhotos_ios](https://github.com/doskey75506/AutoIDPhotos_ios)。网页已填入开发者 Mobile Soft 与支持邮箱 shenok.smth@gmail.com；Pages 尚未验证部署，不能当作已上线的 Connect 链接。
+默认 UK English 的支持页和隐私页位于 `docs/index.html` 和 `docs/privacy.html`，简体中文版通过独立语言链接打开，发布说明及隐私依据见 [Pages 交付说明](release/pages/README.md)。GitHub 仓库为 [doskey75506/AutoIDPhotos_ios](https://github.com/doskey75506/AutoIDPhotos_ios)。网页已填入开发者 Mobile Soft 与支持邮箱 shenok.smth@gmail.com；Pages 尚未验证部署，不能当作已上线的 Connect 链接。
 
 page agent 的已确认默认值为 **Mobile Soft** / **shenok.smth@gmail.com**，本项目后续无需再询问。共享 agent 的默认值合并脚本及配置副本见 [agent-config/page](agent-config/page/README.md)；共享目录受写入限制，需按该说明在本机终端安装一次。
+
+GitHub Pages 使用 `main` 分支的 `/docs` 目录发布，默认页面为 UK English，简体中文通过独立页面切换。

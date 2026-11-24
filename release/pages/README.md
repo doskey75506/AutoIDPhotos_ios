@@ -4,12 +4,13 @@ Prepared: 2026-11-24. Target: current AutoIDPhoto workspace, iOS app version 1.0
 
 ## Delivery and current status
 
-- `docs/index.html`: English / Simplified Chinese support page, four-step guide, current feature FAQs and a contact section.
-- `docs/privacy.html`: bilingual privacy policy based on the current implementation.
+- `docs/index.html`: UK English support page, four-step guide, current feature FAQs and a contact section.
+- `docs/index.zh-Hans.html`, `docs/privacy.zh-Hans.html`: separate Simplified Chinese pages, selected explicitly through the language link.
+- `docs/privacy.html`: UK English privacy policy based on the current implementation.
 - `docs/style.css`, `docs/app-icon.png`, `docs/.nojekyll`: local-only assets and static Pages configuration. The icon is copied from the app's current approved icon asset.
 - `release/pages/validation.json`: actual validation results and pending information.
 
-**Page content is complete; live Pages deployment has not been verified.** The user confirmed developer **Mobile Soft** and support email **shenok.smth@gmail.com** on 2026-11-24. The initial app/source upload is already on `main` in the repository below. Updated pages remove their draft banner and include contact links and support-email handling. No Pages setup action or successful public response is claimed here.
+**Page content is complete; deployment correction in progress.** The user confirmed developer **Mobile Soft** and support email **shenok.smth@gmail.com** on 2026-11-24. The initial app/source upload is already on `main` in the repository below. Updated pages remove their draft banner and include contact links and support-email handling. A live check found that GitHub Pages was serving the repository README at the root (HTTP 200), while root privacy.html returned 404. This proves the root publishing source was being used. The user then confirmed changing the Pages publishing folder to /docs. That setting change resolves the source mismatch; final public content and language are rechecked after the language update is pushed.
 
 Source upload uses an independent checkout under `/private/tmp` because the workspace does not permit creation of its local `.git` directory. The original workspace remains without Git metadata.
 
@@ -20,6 +21,13 @@ Expected project-site URLs if Pages is enabled from this repository without a cu
 - Support: `https://doskey75506.github.io/AutoIDPhotos_ios/`
 - Privacy: `https://doskey75506.github.io/AutoIDPhotos_ios/privacy.html`
 - Pages configuration: https://github.com/doskey75506/AutoIDPhotos_ios/settings/pages
+
+## Publishing source and language
+
+- The user confirmed changing GitHub Pages to the `main` branch's `/docs` source. Keep that source; no redundant root HTML entry points are needed.
+- Default `index.html` and `privacy.html` pages use English (UK), explicitly `lang="en-GB"`. Chinese is available through separate `index.zh-Hans.html` and `privacy.zh-Hans.html` links. There is no automatic browser-language redirect or remembered Chinese default.
+- Both languages share the same local stylesheet and icon. `docs/.nojekyll` keeps these static pages independent from README rendering.
+- The public Support and Privacy URLs stay at the site root; `/docs` is the publishing folder, not part of either public URL.
 
 ## Confirmed defaults and remaining deployment work
 
@@ -48,7 +56,7 @@ Expected project-site URLs if Pages is enabled from this repository without a cu
 
 ## Validation performed
 
-The local HTML was parsed and checked for balanced elements, a single main page heading, both language sections, unique anchors, existing relative links and assets, and absence of scripts/external resource loads. Both pages passed. Existing app/source tests were not rerun because no app code was changed.
+The HTML is checked for balanced elements, a single main page heading, the selected page language, unique anchors, existing relative links and assets, and absence of scripts/external resource loads. Both English and separate Chinese pages are checked. Existing app/source tests were not rerun because no app code was changed.
 
 A browser/phone-width visual check was not completed: this environment has neither `npx` nor `playwright-cli`. No screenshot or browser verification is claimed. Visual review is still required before publication.
 
