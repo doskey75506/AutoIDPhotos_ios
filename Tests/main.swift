@@ -291,17 +291,31 @@ check(abs((nativeJPEGProperties[kCGImagePropertyDPIWidth] as! NSNumber).doubleVa
 check(abs((nativeJPEGProperties[kCGImagePropertyDPIHeight] as! NSNumber).doubleValue - 307.75) < 1,
       "JPEG must retain native vertical density")
 
-// Language preference starts in English, survives reads and does not mutate photo settings.
+// Follow the primary iOS language until the user explicitly chooses a language.
 let languageSuite = "AutoIDPhoto.LanguageTests." + UUID().uuidString
 let languageDefaults = UserDefaults(suiteName: languageSuite)!
 defer { languageDefaults.removePersistentDomain(forName: languageSuite) }
-check(AppLanguage.selected(defaults: languageDefaults) == .english, "A fresh install must default to English")
+for identifier in ["zh", "zh-Hans", "zh-Hans-CN", "zh-Hant-TW", "zh-HK", "ZH_Hant"] {
+    check(AppLanguage.selected(defaults: languageDefaults, preferredLanguages: [identifier]) == .simplifiedChinese,
+          "Chinese system language \(identifier) must default to Simplified Chinese")
+}
+for languages in [["en-GB"], ["fr-FR", "zh-Hans"], ["ja-JP"], [String](), [""]] {
+    check(AppLanguage.selected(defaults: languageDefaults, preferredLanguages: languages) == .english,
+          "Non-Chinese primary languages and missing system preferences must default to English")
+}
+check(languageDefaults.object(forKey: AppLanguage.preferenceKey) == nil,
+      "Reading the system default must not save a manual language override")
 languageDefaults.set(AppLanguage.simplifiedChinese.rawValue, forKey: AppLanguage.preferenceKey)
-check(AppLanguage.selected(defaults: languageDefaults) == .simplifiedChinese, "Chinese selection must be remembered")
+check(AppLanguage.selected(defaults: languageDefaults, preferredLanguages: ["en-GB"]) == .simplifiedChinese,
+      "Manual Chinese selection must override an English system")
 languageDefaults.set(AppLanguage.english.rawValue, forKey: AppLanguage.preferenceKey)
-check(AppLanguage.selected(defaults: languageDefaults) == .english, "Switching back to English must be remembered")
+check(AppLanguage.selected(defaults: languageDefaults, preferredLanguages: ["zh-Hans"]) == .english,
+      "Manual English selection must override a Chinese system")
 languageDefaults.set("invalid-language", forKey: AppLanguage.preferenceKey)
-check(AppLanguage.selected(defaults: languageDefaults) == .english, "Unknown stored languages must fall back to English")
+check(AppLanguage.selected(defaults: languageDefaults, preferredLanguages: ["zh-Hant"]) == .simplifiedChinese,
+      "Unknown stored languages must fall back to the system language")
+check(AppLanguage.selected(defaults: languageDefaults, preferredLanguages: ["de-DE"]) == .english,
+      "Unknown stored languages must fall back to English on other systems")
 let localizationDirectory = FileManager().temporaryDirectory.appendingPathComponent("AutoIDPhoto-Localization-" + UUID().uuidString + ".bundle")
 defer { try? FileManager().removeItem(at: localizationDirectory) }
 let bundleContents = localizationDirectory.appendingPathComponent("Contents")

@@ -31,22 +31,26 @@ def execute(command, *, timeout=120, check=True):
     return result
 
 
-def choose_device(data, requested=None):
+def choose_device(data, requested=None, family="iphone"):
     devices = []
     for runtime, group in data.get('devices', {}).items():
         for device in group:
-            if device.get('isAvailable') and 'iPhone' in device.get('name', ''):
+            if device.get('isAvailable') and ('iPad' if family == 'ipad' else 'iPhone') in device.get('name', ''):
                 devices.append({**device, 'runtime': runtime})
     if requested:
         matches = [device for device in devices if device['udid'] == requested]
         if not matches:
-            raise RuntimeError('指定 UDID 不是可用的 iPhone 模拟器，请先运行 xcrun simctl list devices available。')
+            raise RuntimeError(f'指定 UDID 不是可用的 {family} 模拟器，请先运行 xcrun simctl list devices available。')
+        if family == 'ipad' and not ('13-inch' in matches[0]['name'] or '12.9-inch' in matches[0]['name']):
+            raise RuntimeError('iPad 商店截图需要13英寸或12.9英寸设备，指定设备不匹配。')
         return matches[0]
+    if family == 'ipad':
+        devices = [device for device in devices if '13-inch' in device['name'] or '12.9-inch' in device['name']]
     if not devices:
-        raise RuntimeError('没有可用的 iPhone 模拟器；请在 Xcode 中安装 runtime 并创建模拟器。')
+        raise RuntimeError('没有可用的匹配模拟器；iPad 商店截图需要 13 英寸或 12.9 英寸设备。')
     booted = [device for device in devices if device['state'] == 'Booted']
     if len(booted) > 1:
-        raise RuntimeError('有多个已启动的 iPhone 模拟器，请用 --device 明确指定 UDID，避免误拍。')
+        raise RuntimeError('有多个已启动的匹配模拟器，请用 --device 明确指定 UDID，避免误拍。')
     return booted[0] if booted else sorted(devices, key=lambda item: (item['runtime'], item['name']), reverse=True)[0]
 
 
@@ -96,8 +100,10 @@ def save_json(path, contents):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--language', choices=['en', 'zh-Hans'], default='en', help='目标截图语言；截屏前使用 App 右上角语言按钮确认')
-    parser.add_argument('--device', help='明确指定 iPhone Simulator UDID；否则优先使用唯一已启动的 iPhone')
+    parser.add_argument('--language', choices=['en', 'zh-Hans', 'both'], default='en', help='目标截图语言；both 依次拍英文与简体中文')
+    parser.add_argument('--device-family', choices=['iphone', 'ipad'], default='iphone', help='ipad 使用原生 13/12.9 英寸设备，每种语言恰好三个状态')
+    parser.add_argument('--demo-photo', type=Path, default=ROOT / 'design/demo/cartoon-portrait.png', help='已确认可公开的演示图片，用 simctl addmedia 导入')
+    parser.add_argument('--device', help='明确指定匹配设备族的 Simulator UDID；否则优先已启动设备')
     parser.add_argument('--output', type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument('--include-photo-pages', action='store_true', help='额外拍编辑/生成页；请先准备已获授权可公开的测试照片')
     args = parser.parse_args()
@@ -114,7 +120,7 @@ def main():
     try:
         manifest['xcode'] = execute(['xcodebuild', '-version']).stdout.strip()
         result = execute(['xcrun', 'simctl', 'list', 'devices', 'available', '-j'], timeout=30)
-        device = choose_device(json.loads(result.stdout), args.device)
+        device = choose_device(json.loads(result.stdout), args.device, args.device_family)
         manifest['simulator'] = device
         udid = device['udid']
         print(f'本次仅操作 {device["name"]}（{udid}）', flush=True)
@@ -144,31 +150,59 @@ def main():
             raise RuntimeError('构建产物的 Bundle ID 与目标 App 不符，已停止。')
         execute(['xcrun', 'simctl', 'install', udid, app])
         execute(['xcrun', 'simctl', 'terminate', udid, BUNDLE], check=False)
-        manifest['launch_result'] = execute(['xcrun', 'simctl', 'launch', udid, BUNDLE]).stdout.strip()
-        manifest['status'] = 'running'
-        print('截屏前请使用 App 右上角地球按钮确认界面语言：' + ('English' if args.language == 'en' else '简体中文'))
-        pages = [('main', '首页：确认已显示当前 App 主界面，无弹窗、无载入中状态'),
-                 ('settings', '参数设置页：点击“Photo & Print Settings / 证件照与打印规格”，确认参数已显示、键盘关闭')]
-        if args.include_photo_pages:
-            pages += [('editor', '照片编辑页：只导入已获授权可公开的测试照片，显示头部方框'),
-                      ('result', '生成结果页：实际生成成功后，显示证件照和打印拼版')]
+        if args.include_photo_pages or args.device_family == 'ipad':
+            if not args.demo_photo.is_file():
+                raise RuntimeError(f'演示图片不存在：{args.demo_photo}')
+            execute(['xcrun', 'simctl', 'addmedia', udid, args.demo_photo])
+            manifest['demo_photo'] = str(args.demo_photo)
+        languages = ['en', 'zh-Hans'] if args.language == 'both' else [args.language]
+        manifest['languages'] = languages
+        manifest['device_family'] = args.device_family
         device_name = re.sub(r'[^A-Za-z0-9]+', '-', device['name']).strip('-')
-        for number, (label, description) in enumerate(pages, 1):
-            print('\n请手动在上述指定模拟器中切换页面：' + description)
-            response = input('确认页面合适后回车截图；s 跳过，q 结束：').strip().lower()
-            if response == 'q':
-                break
-            if response == 's':
-                continue
-            path = directory / f'Screenshot-{number:02d}-{label}-{device_name}-{args.language}-v{version}.png'
-            if path.exists():
-                raise FileExistsError(path)
-            execute(['xcrun', 'simctl', 'io', udid, 'screenshot', '--type=png', path])
-            properties = png_properties(path)
-            manifest['screenshots'].append({'file': path.name, 'page': label, 'description': description,
-                                            'capture_command': f'xcrun simctl io {udid} screenshot --type=png', **properties})
-            print(f'已保存 {path.name}：{properties["width"]} × {properties["height"]}', flush=True)
-        manifest['status'] = 'captured' if manifest['screenshots'] else 'no screenshots selected'
+        if args.device_family == 'ipad':
+            pages = [('settings', '启动规格页：确认目标语言，选择蓝色照片背景，返回表单顶部，关闭键盘。不要点击确定，先拍这一张'),
+                     ('editor', '点击确定，然后用文件夹选择已导入的 cartoon-portrait.png；拖动方框对齐头顶、下巴，确认绿框；不拍黑色实时相机画面'),
+                     ('result', '点击生成，等待实际单张证件照与8张拼版出现，必要时滚动以展示生成结果；不能拍载入/错误或权限弹窗')]
+        else:
+            pages = [('main', '首页：确认当前App界面已显示，无弹窗、无载入中状态'),
+                     ('settings', '参数设置页：点击规格设置图标，确认参数已显示，键盘关闭')]
+            if args.include_photo_pages:
+                pages += [('editor', '导入已获授权的演示照片，显示正确头部方框'),
+                          ('result', '实际生成成功后，显示证件照和打印拼版')]
+        manifest['requested_count'] = len(languages) * len(pages)
+        for language in languages:
+            execute(['xcrun', 'simctl', 'terminate', udid, BUNDLE], check=False)
+            # NSArgumentDomain scopes the requested app language to this launch.
+            launch = execute(['xcrun', 'simctl', 'launch', udid, BUNDLE,
+                              '-appInterfaceLanguage', language])
+            manifest.setdefault('launch_results', {})[language] = launch.stdout.strip()
+            manifest['status'] = 'running'
+            print('本轮目标语言：' + ('English (UK)' if language == 'en' else '简体中文'))
+            print('请确认竖屏、App真实运行、界面无弹窗；脚本只截图，不代替你操作页面。')
+            for number, (label, description) in enumerate(pages, 1):
+                print('\n请手动在指定模拟器中切换页面：' + description)
+                response = input('已确认真实页面正确后回车截图；s 跳过，q 结束：').strip().lower()
+                if response == 'q':
+                    raise RuntimeError('用户结束截图流程')
+                if response == 's':
+                    continue
+                filename_language = 'en-GB' if language == 'en' else language
+                path = directory / f'Screenshot-{number:02d}-{label}-{device_name}-{filename_language}-v{version}.png'
+                if path.exists():
+                    raise FileExistsError(path)
+                execute(['xcrun', 'simctl', 'io', udid, 'screenshot', '--type=png', path])
+                properties = png_properties(path)
+                if args.device_family == 'ipad' and (properties['width'], properties['height']) not in {(2064, 2752), (2048, 2732)}:
+                    raise RuntimeError(f'实际截图不是13英寸iPad可上传竖屏尺寸：{properties}')
+                entry = {'file': path.name, 'page': label, 'description': description,
+                         'language': filename_language, 'user_confirmed_page': True,
+                         'capture_command': f'xcrun simctl io {udid} screenshot --type=png', **properties}
+                manifest['screenshots'].append(entry)
+                if properties['alpha_channel'] is not False:
+                    raise RuntimeError('PNG含alpha通道，保留原生截图但尚未符合商店无透明通道要求；请先无损转为不带alpha的RGB PNG再上传。')
+                print(f'已保存 {path.name}：{properties["width"]} × {properties["height"]}', flush=True)
+        manifest['status'] = 'captured' if len(manifest['screenshots']) == manifest['requested_count'] else 'partial'
+        manifest['app_store_spec_validation'] = 'native PNG dimensions and alpha checked; App Review acceptance not asserted'
     except (RuntimeError, OSError, ValueError, subprocess.TimeoutExpired, EOFError, KeyboardInterrupt) as error:
         manifest['status'] = 'blocked' if not manifest['screenshots'] else 'partial'
         manifest['error'] = str(error)

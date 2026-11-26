@@ -4,8 +4,8 @@ import AVFoundation
 import UIKit
 
 struct ContentView: View {
-    @AppStorage(AppLanguage.preferenceKey) private var languageRaw = AppLanguage.english.rawValue
-    private var language: AppLanguage { AppLanguage(rawValue: languageRaw) ?? .english }
+    @AppStorage(AppLanguage.preferenceKey) private var languageRaw = AppLanguage.systemDefault().rawValue
+    private var language: AppLanguage { AppLanguage(rawValue: languageRaw) ?? .systemDefault() }
     @StateObject private var model = PhotoModel()
     @StateObject private var camera = CameraController()
     @Environment(\.scenePhase) private var scenePhase
@@ -158,7 +158,7 @@ struct ContentView: View {
                 Color.black
                 if wantsCamera {
                     if camera.isRunning {
-                        CameraPreview(session: camera.session, mirrored: camera.position == .front, rotation: $cameraRotation)
+                        CameraPreview(session: camera.session, device: camera.device, mirrored: camera.position == .front, rotation: $cameraRotation)
                             .accessibilityLabel(Text(AppText.localized("摄像头实时预览")))
                     } else {
                         VStack(spacing: 12) {
@@ -268,7 +268,7 @@ struct SettingsView: View {
     @Binding var settings: PhotoSettings
     var isInitial = false
     var onConfirm: (() -> Void)? = nil
-    @AppStorage(AppLanguage.preferenceKey) private var languageRaw = AppLanguage.english.rawValue
+    @AppStorage(AppLanguage.preferenceKey) private var languageRaw = AppLanguage.systemDefault().rawValue
     @State private var draft = PhotoSettings()
     @Environment(\.dismiss) private var dismiss
     var body: some View {

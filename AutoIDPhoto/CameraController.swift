@@ -14,14 +14,15 @@ private final class CameraSession: NSObject, AVCapturePhotoCaptureDelegate, @unc
     private var capturedData: Data?
     private var captureError: Error?
 
-    func start(position: AVCaptureDevice.Position) async throws {
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+    func start(position: AVCaptureDevice.Position) async throws -> AVCaptureDevice {
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<AVCaptureDevice, Error>) in
             queue.async {
                 do {
                     try self.configure(position: position)
                     if !self.session.isRunning { self.session.startRunning() }
                     guard self.session.isRunning else { throw PhotoError.message("摄像头未能启动，请重试。") }
-                    continuation.resume()
+                    guard let device = self.input?.device else { throw PhotoError.message("摄像头未能启动，请重试。") }
+                    continuation.resume(returning: device)
                 } catch {
                     if self.session.isRunning { self.session.stopRunning() }
                     continuation.resume(throwing: error)
@@ -131,6 +132,7 @@ final class CameraController: ObservableObject {
     @Published private(set) var isStarting = false
     @Published private(set) var isCapturing = false
     @Published private(set) var position = AVCaptureDevice.Position.front
+    @Published private(set) var device: AVCaptureDevice?
     @Published private(set) var status = "正在连接摄像头…" { didSet { statusError = nil } }
     @Published private(set) var statusError: Error?
     var displayStatus: String {
@@ -170,8 +172,9 @@ final class CameraController: ObservableObject {
         guard allowed else { status = "相机权限未开启，请在系统设置中允许访问，或从相册选择照片。"; return }
         let target = requestedPosition ?? position
         do {
-            try await camera.start(position: target)
+            let activeDevice = try await camera.start(position: target)
             guard ticket == requestID else { return }
+            device = activeDevice
             position = target
             isRunning = true
             status = "实时视频：请保持正面，点击快门拍摄。"
@@ -210,6 +213,7 @@ final class CameraController: ObservableObject {
 
 struct CameraPreview: UIViewRepresentable {
     let session: AVCaptureSession
+    let device: AVCaptureDevice?
     let mirrored: Bool
     @Binding var rotation: CGFloat
 
@@ -224,24 +228,59 @@ struct CameraPreview: UIViewRepresentable {
     }
     func updateUIView(_ view: PreviewView, context: Context) {
         view.mirrored = mirrored
+        view.configureRotation(device: device)
         view.setNeedsLayout()
     }
-    static func dismantleUIView(_ view: PreviewView, coordinator: ()) { view.previewLayer.session = nil }
+    static func dismantleUIView(_ view: PreviewView, coordinator: ()) {
+        view.configureRotation(device: nil)
+        view.onRotation = nil
+        view.previewLayer.session = nil
+    }
 
     final class PreviewView: UIView {
         override class var layerClass: AnyClass { AVCaptureVideoPreviewLayer.self }
         var previewLayer: AVCaptureVideoPreviewLayer { layer as! AVCaptureVideoPreviewLayer }
         var mirrored = false
         var onRotation: ((CGFloat) -> Void)?
+        private var rotationCoordinator: AVCaptureDevice.RotationCoordinator?
+        private var previewRotationObservation: NSKeyValueObservation?
+        private var captureRotationObservation: NSKeyValueObservation?
+
+        func configureRotation(device: AVCaptureDevice?) {
+            guard rotationCoordinator?.device !== device else {
+                applyRotation()
+                return
+            }
+            previewRotationObservation = nil
+            captureRotationObservation = nil
+            rotationCoordinator = nil
+            guard let device else { return }
+            let coordinator = AVCaptureDevice.RotationCoordinator(device: device, previewLayer: previewLayer)
+            rotationCoordinator = coordinator
+            // AVFoundation delivers rotation KVO on the main queue. Keep preview
+            // and capture angles separate: sensor orientation varies by camera.
+            previewRotationObservation = coordinator.observe(\.videoRotationAngleForHorizonLevelPreview, options: [.new]) { [weak self] _, _ in
+                self?.applyRotation()
+            }
+            captureRotationObservation = coordinator.observe(\.videoRotationAngleForHorizonLevelCapture, options: [.new]) { [weak self] _, _ in
+                self?.applyRotation()
+            }
+            applyRotation()
+        }
+
+        override func didMoveToWindow() {
+            super.didMoveToWindow()
+            applyRotation()
+        }
+
         override func layoutSubviews() {
             super.layoutSubviews()
-            let angle: CGFloat
-            switch window?.windowScene?.interfaceOrientation {
-            case .landscapeLeft: angle = 180
-            case .landscapeRight: angle = 0
-            case .portraitUpsideDown: angle = 270
-            default: angle = 90
-            }
+            applyRotation()
+        }
+
+        private func applyRotation() {
+            guard window != nil, let coordinator = rotationCoordinator else { return }
+            let angle = coordinator.videoRotationAngleForHorizonLevelPreview
             if let connection = previewLayer.connection {
                 if connection.isVideoRotationAngleSupported(angle) { connection.videoRotationAngle = angle }
                 if connection.isVideoMirroringSupported {
@@ -249,7 +288,7 @@ struct CameraPreview: UIViewRepresentable {
                     connection.isVideoMirrored = mirrored
                 }
             }
-            onRotation?(angle)
+            onRotation?(coordinator.videoRotationAngleForHorizonLevelCapture)
         }
     }
 }

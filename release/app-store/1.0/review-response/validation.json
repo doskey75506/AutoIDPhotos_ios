@@ -1,0 +1,20 @@
+{
+  "status": "draft; not ready to submit",
+  "notes_characters": 3605,
+  "limit": 4000,
+  "pending_placeholders": [
+    "[VIDEO_URL_OR_ATTACHMENT_FILENAME]",
+    "[PHYSICAL_DEVICE_MODEL_AND_EXACT_OS_VERSION]",
+    "[ACTUAL_VERSION_AND_BUILD]",
+    "[ACTUAL_TEST_DETAILS]",
+    "[SAMPLE_PHOTO_ATTACHMENT_FILENAME_OR_ACCESSIBLE_LINK]",
+    "[CONFIRM_THIS_MATCHES_THE_SUBMITTED_BUILD_AND_DISTRIBUTION]",
+    "[VERIFIED_MODEL_LICENCE_ATTACHMENT_OR_LINK]"
+  ],
+  "source_review_date": "2026-11-25",
+  "physical_recording_provided": false,
+  "physical_QA_verified": false,
+  "model_licence_provenance_verified": false,
+  "app_code_changed": false,
+  "submitted_to_apple": false
+}

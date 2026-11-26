@@ -1,7 +1,7 @@
 Create single ID photos and multi-photo print sheets, with control over dimensions, head position and background.
 
 START WITH YOUR SETTINGS
-Each launch begins with specification settings and a short four-step guide. Confirm photo size, head-height range, background and paper size before opening the camera. Settings are remembered. English is the default interface; switch to Simplified Chinese using the globe button.
+Each launch begins with specification settings and a short four-step guide. Confirm photo size, head-height range, background and paper size before opening the camera. Settings are remembered. The interface starts in Simplified Chinese on Chinese-language devices and English on other devices. Use the globe button to switch languages; your choice is remembered.
 
 CAPTURE OR CHOOSE A PHOTO
 Use the live camera preview, starting with the front camera, or choose an image from your photo library. Switch between front and rear cameras when taking a photo.

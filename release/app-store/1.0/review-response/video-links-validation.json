@@ -1,0 +1,20 @@
+{
+  "file": "reply-and-notes-en-GB-with-video-links-DRAFT.txt",
+  "characters": 3222,
+  "recordings_provided_by_user": {
+    "iPhone": "https://youtube.com/shorts/xL6J3edFDVc",
+    "iPad": "https://youtube.com/shorts/sN_SRWh3APY"
+  },
+  "video_playback_verified": false,
+  "video_check_result": "Web fetch failed for both YouTube Shorts links; no claim of playback, public availability, latest OS or matching build verification.",
+  "pending_placeholders": [
+    "[IPHONE_MODEL_AND_IOS_VERSION]",
+    "[IPAD_MODEL_AND_IPADOS_VERSION]",
+    "[VERSION_AND_BUILD]"
+  ],
+  "licence_note": "Upstream licence references supplied; exact local weight provenance and bundled notices remain unverified.",
+  "submitted_to_apple": false,
+  "utf8_bytes": 3222,
+  "limit_unit": "UTF-8 bytes",
+  "limit": 4000
+}

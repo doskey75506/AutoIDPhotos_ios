@@ -33,9 +33,9 @@
       "status": "within limit"
     },
     "description": {
-      "characters": 2389,
-      "utf8_bytes": 2391,
-      "utf16_code_units": 2389,
+      "characters": 2472,
+      "utf8_bytes": 2474,
+      "utf16_code_units": 2472,
       "limit": 4000,
       "limit_unit": "characters",
       "status": "within limit"
@@ -83,9 +83,9 @@
       "status": "within limit"
     },
     "description": {
-      "characters": 846,
-      "utf8_bytes": 2320,
-      "utf16_code_units": 846,
+      "characters": 857,
+      "utf8_bytes": 2353,
+      "utf16_code_units": 857,
       "limit": 4000,
       "limit_unit": "characters",
       "status": "within limit"

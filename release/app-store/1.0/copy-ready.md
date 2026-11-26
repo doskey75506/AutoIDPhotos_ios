@@ -34,7 +34,7 @@ background,resize,layout,jpeg,pdf,selfie,dimensions,camera,spacing,resolution
 Create single ID photos and multi-photo print sheets, with control over dimensions, head position and background.
 
 START WITH YOUR SETTINGS
-Each launch begins with specification settings and a short four-step guide. Confirm photo size, head-height range, background and paper size before opening the camera. Settings are remembered. English is the default interface; switch to Simplified Chinese using the globe button.
+Each launch begins with specification settings and a short four-step guide. Confirm photo size, head-height range, background and paper size before opening the camera. Settings are remembered. The interface starts in Simplified Chinese on Chinese-language devices and English on other devices. Use the globe button to switch languages; your choice is remembered.
 
 CAPTURE OR CHOOSE A PHOTO
 Use the live camera preview, starting with the front camera, or choose an image from your photo library. Switch between front and rear cameras when taking a photo.
@@ -96,7 +96,7 @@ Requires iOS 17 or later. For printing, use matching paper, 100% / actual size a
 制作单张证件照与多张打印拼版，自行调整照片尺寸、人像位置、背景与打印规格。
 
 先确认规格，再开始拍摄
-每次启动先显示规格设置与四步简要说明。确认证件照尺寸、头高范围、背景及纸张大小后，再进入拍摄页。参数会保存在本机。界面默认英文，可通过地球按钮切换简体中文，并记住语言选择。
+每次启动先显示规格设置与四步简要说明。确认证件照尺寸、头高范围、背景及纸张大小后，再进入拍摄页。参数会保存在本机。中文系统默认简体中文，其他语言系统默认英文；可通过地球按钮切换语言，并记住选择。
 
 拍照或从相册选图
 在页面内查看实时相机画面并拍摄，默认使用前置摄像头，也可切换后置；或直接选择相册中的照片。

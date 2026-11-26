@@ -6,8 +6,17 @@ enum AppLanguage: String, CaseIterable {
     static let preferenceKey = "appInterfaceLanguage"
     var locale: Locale { Locale(identifier: rawValue) }
 
-    static func selected(defaults: UserDefaults = .standard) -> AppLanguage {
-        defaults.string(forKey: preferenceKey).flatMap(AppLanguage.init(rawValue:)) ?? .english
+    static func systemDefault(preferredLanguages: [String] = Locale.preferredLanguages) -> AppLanguage {
+        let primaryLanguage = preferredLanguages.first?
+            .replacingOccurrences(of: "_", with: "-").lowercased()
+        return primaryLanguage == "zh" || primaryLanguage?.hasPrefix("zh-") == true
+            ? .simplifiedChinese : .english
+    }
+
+    static func selected(defaults: UserDefaults = .standard,
+                         preferredLanguages: [String] = Locale.preferredLanguages) -> AppLanguage {
+        defaults.string(forKey: preferenceKey).flatMap(AppLanguage.init(rawValue:))
+            ?? systemDefault(preferredLanguages: preferredLanguages)
     }
 }
 

@@ -1,0 +1,40 @@
+App: ID Photo Maker
+Developer: Mobile Soft
+Support: shenok.smth@gmail.com
+
+1. Physical-device demonstration and testing
+Recording: [VIDEO_URL_OR_ATTACHMENT_FILENAME]
+Recorded device and OS: [PHYSICAL_DEVICE_MODEL_AND_EXACT_OS_VERSION]
+App version/build in the recording: [ACTUAL_VERSION_AND_BUILD]
+Other supported physical devices tested, OS versions and test date: [ACTUAL_TEST_DETAILS]
+The recording starts with launching the app and demonstrates the normal editing and export workflow. It must correspond to the submitted build.
+
+2. Purpose and target audience
+ID Photo Maker is a consumer photo-editing utility for individual users who want to create ID photos and printable photo sheets. It helps users crop photos to configurable physical dimensions and head-height requirements, replace the background and arrange multiple copies on the chosen paper size. It is available to individual consumers and is not restricted to a particular organisation or its employees.
+
+3. Setup and access to the main features
+No account, registration, login or credentials are required. There are no subscriptions, in-app purchases or paid feature unlocks in the app. The app has no public user-content feed, messaging or user-account sharing platform.
+
+Sample photo: [SAMPLE_PHOTO_ATTACHMENT_FILENAME_OR_ACCESSIBLE_LINK]
+Steps:
+a. Launch the app, confirm the dimensions, head-height range, paper size and background, then tap Confirm.
+b. Choose the sample photo using the folder button, or take a photo using the camera. Allow Camera access if taking a photo.
+c. Drag inside the head box to move it and drag a corner to resize it. Align the crown and chin and enclose the head. Green indicates that the crop fits the current dimensions.
+d. Tap Generate Photo & Print Sheet. Review the single-photo and print-sheet results.
+e. Use the share button below either result to save to Photos or share JPEG. The sheet also supports PDF. Saving requests Photos permission; file sharing does not require library permission.
+f. The settings icon changes dimensions, background and output resolution. The globe button switches English and Simplified Chinese.
+
+4. External tools, platforms and AI
+Apple AVFoundation provides camera capture; Photos/PhotosUI provide image selection and saving; Vision provides face positioning. A bundled MODNet model, converted to Core ML, performs portrait background segmentation locally. Vision can provide a local fallback if the bundled model is absent. Core Graphics/ImageIO provide compositing and export; the iOS share sheet handles user-selected sharing destinations.
+No external AI API, remote image-processing server, authentication provider or payment processor is used for core functionality. Photos, head geometry and masks are not uploaded to the developer or an AI service. The app does not identify individuals or train models on users' photos.
+
+5. Regional differences
+The implemented features and content do not change by region. English and Simplified Chinese can be selected in the app; system dialogs follow iOS settings. [CONFIRM_THIS_MATCHES_THE_SUBMITTED_BUILD_AND_DISTRIBUTION]
+
+6. Third-party material and authorisation
+This is a photo-editing utility, not a regulated service. The app bundles a converted MODNet model. Upstream source and current licence statement:
+https://github.com/ZHKKKe/MODNet#license
+The upstream project currently identifies its code and models as Apache-2.0. Documentation for the exact model used and applicable licence: [VERIFIED_MODEL_LICENCE_ATTACHMENT_OR_LINK]
+
+Privacy policy:
+https://doskey75506.github.io/AutoIDPhotos_ios/privacy.html
