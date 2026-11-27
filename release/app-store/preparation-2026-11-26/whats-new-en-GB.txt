@@ -1,0 +1,2 @@
+• Fixed camera preview orientation on affected iPhones, including when switching between the front and rear cameras.
+• The app now starts in Simplified Chinese on Chinese-language devices and English on other devices. Your manual language choice is remembered.

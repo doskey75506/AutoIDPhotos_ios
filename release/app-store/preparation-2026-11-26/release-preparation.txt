@@ -1,0 +1,45 @@
+AutoIDPhoto 1.1 更新发布准备 — 2026-11-27（原准备目录保留）
+
+本次运行源码基线：f6338ee2ff909f2235f6548fa67b35c0663340e1。
+用户已确认 1.0 已上线，本次准备 1.1 更新。本地 Xcode 工程当前为 version 1.1 / build 2，Debug 与 Release 一致；本次上传任务保留这些用户设置，没有修改版本号或 build。未检查 Connect 当前版本及最高 build，未上传二进制或提交后台。
+注意：当前 target 最低系统为 iOS 17.6，Debug 与 Release 一致；原提交的有效最低系统为 iOS 17.0。本版本提高了最低系统要求，不再支持 iOS 17.0–17.5。该变化来自现有 Xcode 配置，本次 Git 任务未自行调整。
+
+一、1.1 更新流程
+1.0 已上线，因此按更新处理，不再使用首次发布流程。App Store Connect 中创建或继续编辑 1.1 版本，版本号须与当前 Xcode Version 1.1 一致，并选择对应的新 build。
+当前本地 Build 为 2。归档前核对 Connect 已上传的最高 build；若 2 已使用，需在实际准备新二进制时另行递增，不能仅凭本地值假定可复用。本次 Git 上传不会替用户猜测或修改 Build。
+1.1 更新须填写 What's New，使用本目录两种语言文件；不要继续沿用 ../1.0/ 首发目录中故意留空的 whats-new.txt。
+
+二、商店文案
+现有 ../1.0/copy-ready.md 包含名称、副标题、促销文字、关键词和完整描述。中英文描述已更新为按系统语言选择默认界面，无需重复改写全部文案。
+更新版的“此版本新增内容”：使用本目录 whats-new-en-GB.txt、whats-new-zh-Hans.txt。它们仅描述本次相机方向和默认语言改动；若实际已上线版本更旧，发布前还需补齐其余差异。
+以上更新说明是面向用户的变更描述，不是已完成真机验证的证明。
+
+三、审核备注与回复
+App Store Connect → Apps → 本 App → 1.1 版本 → App Review Information → Notes。
+此前 1.0 审核期间准备的 2.1 六项信息主文案（作为历史参考，不表示 1.1 存在相同审核要求）：../1.0/review-response/reply-and-notes-en-GB-with-video-links-DRAFT.txt。
+将其中 [IPHONE_MODEL_AND_IOS_VERSION]、[IPAD_MODEL_AND_IPADOS_VERSION]、[VERSION_AND_BUILD] 替换为真实值。设备名称以“设置 → 通用 → 关于本机”为准。
+本目录 review-supplement-en-GB-DRAFT.txt 是此次 build 的补充材料：先完成实际测试，再填入设备/系统/结果及本次 build 的录屏链接。可将其中有用段落整合进六项主文案，勿直接拼接全文超过 Notes 的 4000 字节限制。
+原有 iPhone 录屏：https://youtube.com/shorts/xL6J3edFDVc
+原有 iPad 录屏：https://youtube.com/shorts/sN_SRWh3APY
+旧链接的可播放性、系统版本与当前 build 匹配情况尚未核验；不能将旧录屏称作本次 build 的演示。根据此前审核要求，用最新系统的真机从启动开始录制典型流程。
+完成 1.1 的版本信息、实际 build 选择与审核备注后，按后台流程添加并提交审核。只有该版本实际收到补充信息或拒绝消息时，才依据当前消息处理回复或重新提交；不要把 1.0 已处理的历史要求当作 1.1 仍待回复的事项。
+
+四、截图与网址
+这次改动未改变界面布局；原截图若仍与提交 build 一致，可沿用。若重新截图，使用真实运行界面，分别准备英文和中文。
+iPhone 6.1/6.3 英寸截图包：../../screenshots/AutoIDPhoto-iPhone-6.1-1179x2556.zip
+iPad 13 英寸截图包：../../screenshots/AutoIDPhoto-iPad13-2064x2752.zip
+支持网址：https://doskey75506.github.io/AutoIDPhotos_ios/
+隐私网址：https://doskey75506.github.io/AutoIDPhotos_ios/privacy.html
+开发者：Mobile Soft；邮箱：shenok.smth@gmail.com。
+
+五、本次发布前需要完成的证据
+现有检查：1254 项检查通过，iPhoneOS/iPhoneSimulator 全部 Swift 源码类型检查通过；完整构建受当前环境 CoreMLModelCompile sandbox_apply 限制，未成功归档。
+请在普通 Xcode 环境归档，并在实际提交 build 上验证：竖屏预览、前后摄切换、横竖屏切换、拍照后的原图方向、默认语言/手动偏好、导入、生成、单张与打印版分享。记录准确设备型号、系统和 build。
+MODNet：审核主文案包含上游许可证链接；本地所用权重的来源/授权及所需许可证随包材料仍需完成核对，不能仅凭文字声明已获授权。
+
+官方依据（核对于 2026-11-26）
+版本和字段：https://developer.apple.com/help/app-store-connect/reference/app-information/platform-version-information/
+创建更新版本：https://developer.apple.com/help/app-store-connect/update-your-app/create-a-new-version
+上传 build：https://developer.apple.com/help/app-store-connect/manage-builds/upload-builds
+审核消息：https://developer.apple.com/help/app-store-connect/manage-submissions-to-app-review/reply-to-app-review-messages/
+未解决事项重提：https://developer.apple.com/help/app-store-connect/manage-submissions-to-app-review/manage-a-submission-with-unresolved-issues/

@@ -1,0 +1,26 @@
+Version 1.1 update — build-specific information
+The developer has confirmed that version 1.0 is live. This supplement is for the version 1.1 update.
+Current local project: version 1.1, build 2; verify the actual submitted build before replacing [VERSION_AND_BUILD].
+Submitted app version/build: [VERSION_AND_BUILD]
+
+This build updates camera orientation handling to use the active camera's rotation coordinator. Preview and photo capture use their respective rotation angles, and switching cameras binds the coordinator to the new camera.
+
+The initial interface language is Simplified Chinese when Chinese is the device's primary preferred language, and English otherwise. A saved manual language selection takes precedence. Features are otherwise the same across regions.
+
+To check these changes:
+1. Launch the app and confirm the photo settings.
+2. Hold the device upright and check the live front-camera preview.
+3. Switch to the rear camera and back, then take a photo and check its orientation.
+4. Turn the device sideways and back upright and check the preview again.
+5. Use the globe button to switch languages, relaunch the app and check that the selection is remembered.
+
+Physical-device validation for this submitted build:
+[DEVICE_MODELS_OS_VERSIONS_AND_TEST_RESULTS]
+
+Current-build recordings:
+iPhone: [CURRENT_BUILD_IPHONE_RECORDING_URL]
+iPad: [CURRENT_BUILD_IPAD_RECORDING_URL]
+
+The current Xcode target requires iOS 17.6 or later, raised from iOS 17.0 in the previous project configuration.
+
+This is a draft for the version 1.1 update, not a claim that the previous version still has an unresolved review request. Refer to any current App Review message before including historical Guideline 2.1 material.

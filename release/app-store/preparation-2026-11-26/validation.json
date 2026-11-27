@@ -1,0 +1,35 @@
+{
+  "en-GB": {
+    "characters": 260,
+    "utf8_bytes": 264,
+    "limit_characters": 4000,
+    "usage": "Version 1.1 update; version 1.0 is live as confirmed by the user"
+  },
+  "zh-Hans": {
+    "characters": 82,
+    "utf8_bytes": 224,
+    "limit_characters": 4000,
+    "usage": "Version 1.1 update; version 1.0 is live as confirmed by the user"
+  },
+  "prepared_date": "2026-11-26",
+  "updated_date": "2026-11-27",
+  "release_type": "update",
+  "published_version": "1.0 (user-confirmed; Connect not inspected)",
+  "planned_version": "1.1",
+  "local_project_version": "1.1",
+  "local_project_build": "2",
+  "local_target_minimum_ios": "17.6",
+  "previous_effective_minimum_ios": "17.0",
+  "minimum_ios_change": "Raises minimum supported iOS from 17.0 to 17.6; existing user Xcode configuration preserved",
+  "project_configurations_verified": [
+    "Debug",
+    "Release"
+  ],
+  "review_supplement": {
+    "characters": 1720,
+    "utf8_bytes": 1722,
+    "draft": true,
+    "physical_device_evidence_pending": true
+  },
+  "submission_status": "Prepared locally for version 1.1; not submitted. Connect build availability and physical-device evidence pending."
+}
