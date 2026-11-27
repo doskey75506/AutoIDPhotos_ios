@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F17E00000000000000000002 /* PhotoPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17E00000000000000000001 /* PhotoPresets.swift */; };
 		07659711323A23CD72B2DEC5 /* MODNetMatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED03F167C89BBD09DCE4C582 /* MODNetMatting.swift */; };
 		13E4DD408B54EE3FC22C9883 /* PhotoGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10B182BB61C43BD54DA56F9 /* PhotoGeometry.swift */; };
 		31FD28909B84BAD202B821D9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9E67E6FC41E4FD3453A359BC /* Localizable.strings */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F17E00000000000000000001 /* PhotoPresets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPresets.swift; sourceTree = "<group>"; };
 		09D607B662D8F7D979361926 /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
 		1A8CAF5C0C4A5BCA25C19521 /* AutoIDPhotoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoIDPhotoApp.swift; sourceTree = "<group>"; };
 		28AAD1477D5182D66D4B03B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 				1A8CAF5C0C4A5BCA25C19521 /* AutoIDPhotoApp.swift */,
 				9727B9EED8ACD2EE46E136A0 /* ContentView.swift */,
 				D10B182BB61C43BD54DA56F9 /* PhotoGeometry.swift */,
+				F17E00000000000000000001 /* PhotoPresets.swift */,
 				97BD7D30BBE3056F1BE45146 /* PhotoModel.swift */,
 				F7E1D16734EF9F199A50D08B /* PhotoProcessor.swift */,
 			);
@@ -169,6 +172,7 @@
 				3B99742E8E72DB649F50F6D5 /* AutoIDPhotoApp.swift in Sources */,
 				E11030640FCC0E9D6783BF78 /* ContentView.swift in Sources */,
 				13E4DD408B54EE3FC22C9883 /* PhotoGeometry.swift in Sources */,
+				F17E00000000000000000002 /* PhotoPresets.swift in Sources */,
 				816FF3FCC9A61AF222BDAB8F /* PhotoModel.swift in Sources */,
 				A9F2F577B9349DCA889C1774 /* PhotoProcessor.swift in Sources */,
 			);

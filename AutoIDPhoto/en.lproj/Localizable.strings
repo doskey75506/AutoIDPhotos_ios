@@ -157,3 +157,70 @@
 "照片背景" = "Photo Background";
 "蓝色" = "Blue";
 "红色" = "Red";
+
+"生成照片" = "Generate Photos";
+"确认规格后生成照片" = "Confirm settings, then generate";
+"1. 选择证件规格与照片背景。" = "1. Choose photo type and background.";
+"2. 核对人脸范围，必要时返回调整。" = "2. Check framing; return to adjust if needed.";
+"3. 点击确定生成，再分享保存。" = "3. Confirm to generate, then Share to save.";
+"证件规格" = "Photo Preset";
+"证件类型" = "Photo Type";
+"手工设定" = "Manual Settings";
+"已保存的手工参数" = "Saved Custom Presets";
+"查看官方要求" = "View Official Requirements";
+"改为手工设定" = "Customise Settings";
+"指定头顶留白" = "Set Top Margin";
+"头顶留白（毫米）" = "Top Margin (mm)";
+"参数名称" = "Preset Name";
+"保存手工参数" = "Save Custom Preset";
+"存储手工参数" = "Save Custom Settings";
+"保存全部照片和打印参数；同名保存将更新已有参数。" = "Save all photo and print settings. Reusing a name updates that preset.";
+"部分证件申请不接受换背景照片，请先核对官方要求。" = "Some applications do not accept replaced backgrounds. Check the official requirements.";
+"应用规格并调整人脸范围" = "Apply Settings and Adjust Framing";
+"生成前确认" = "Before You Generate";
+"确定并生成" = "Confirm & Generate";
+"手工参数已保存，可在证件类型菜单中再次选择。" = "Custom preset saved. Select it again from the Photo Type menu.";
+"人脸范围，可拖动调节" = "Face area · drag to adjust";
+"头顶留白须为非负数，且留白与最大头高之和须小于照片高度。" = "Top margin must be nonnegative. The margin plus maximum head height must be less than photo height.";
+"请输入不超过 40 个字符的参数名称。" = "Enter a preset name of up to 40 characters.";
+"英国护照" = "UK Passport";
+"英国签证（纸质参考）" = "UK Visa (Print Reference)";
+"美国签证" = "US Visa";
+"德国签证" = "German Visa";
+"加拿大签证" = "Canadian Visa";
+"日本签证（纸质参考）" = "Japanese Visa (Print Reference)";
+"中国护照" = "Chinese Passport";
+"身份证照片（尺寸参考）" = "Chinese ID Card (Size Reference)";
+"纸质尺寸参考，按英国护照比例裁切；电子申请请以签证页面为准。" = "Print reference using UK passport proportions. For digital applications, follow the visa application page.";
+"头高按照片约三分之二作裁切参考；不提供身份证采集回执。" = "Uses an approximate two-thirds head ratio as a crop reference. No official photo receipt is provided.";
+"预设仅用于裁切参考；电子文件、拍摄及受理要求请核对官方说明。" = "Presets are crop references. Check official guidance for digital files, photography and application requirements.";
+
+"头顶需包含头发，眼睛位置与电子尺寸请核对官方要求。" = "Include the hair at the top of the head. Check official eye-position and digital-size requirements.";
+
+"美国护照" = "US Passport";
+
+"单张 %.2f × %.2f mm · 纸张 %.1f × %.1f 英寸" = "Single %.2f × %.2f mm · Paper %.1f × %.1f in";
+
+"最小照片间距（毫米）" = "Minimum Photo Gap (mm)";
+
+"至少 0.5 mm；多余空间均匀分配，单张尺寸不变。" = "At least 0.5 mm. Extra space is distributed evenly; photo size stays unchanged.";
+
+"证件照边长须为 10–200 mm；头高须小于照片高度；纸张须为 1–12 英寸；DPI 须为 150–600；最小间距须为 0.5–10 mm。" = "Photo dimensions must be 10–200 mm; head height must be less than photo height; paper dimensions must be 1–12 in; resolution must be 150–600 DPI; minimum spacing must be 0.5–10 mm.";
+
+"恢复默认值" = "Restore Defaults";
+
+"重新拍摄" = "Retake Photo";
+
+"灰色选项：查看原因与重拍建议" = "Unavailable Options: Reasons & Retake Tips";
+
+"请先拍摄或选择一张照片。" = "Take or choose a photo first.";
+
+"头顶留白不足。请重新拍摄，在头顶上方多留空白；也可选择单色背景补齐顶部。" = "Not enough headroom. Retake with more space above the head, or choose a solid background to fill the top.";
+
+"左侧空间不足。请重新拍摄，将头部居中并在左侧多留空白。" = "Not enough space on the left. Retake with your head centred and more room on the left.";
+
+"右侧空间不足。请重新拍摄，将头部居中并在右侧多留空白。" = "Not enough space on the right. Retake with your head centred and more room on the right.";
+
+"下方空间不足。请重新拍摄，镜头离远一些，保留完整肩部和胸前空间。" = "Not enough space below. Retake from farther away, including your shoulders and more of your upper body.";
+
+"当前规格会裁掉头部两侧。请检查人脸框，或重新拍摄并完整保留头部与双肩。" = "This format would crop the sides of your head. Check the face box, or retake with your full head and shoulders visible.";

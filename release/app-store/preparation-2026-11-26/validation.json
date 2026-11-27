@@ -1,13 +1,13 @@
 {
   "en-GB": {
-    "characters": 260,
-    "utf8_bytes": 264,
+    "characters": 899,
+    "utf8_bytes": 915,
     "limit_characters": 4000,
     "usage": "Version 1.1 update; version 1.0 is live as confirmed by the user"
   },
   "zh-Hans": {
-    "characters": 82,
-    "utf8_bytes": 224,
+    "characters": 317,
+    "utf8_bytes": 865,
     "limit_characters": 4000,
     "usage": "Version 1.1 update; version 1.0 is live as confirmed by the user"
   },
@@ -26,10 +26,11 @@
     "Release"
   ],
   "review_supplement": {
-    "characters": 1720,
-    "utf8_bytes": 1722,
+    "characters": 3006,
+    "utf8_bytes": 3008,
     "draft": true,
     "physical_device_evidence_pending": true
   },
-  "submission_status": "Prepared locally for version 1.1; not submitted. Connect build availability and physical-device evidence pending."
+  "submission_status": "Prepared locally for version 1.1; not submitted. Connect build availability and physical-device evidence pending.",
+  "current_code_test_status": "Feature tests and Swift type checks; physical-device UI validation pending. Full build blocked by CoreML compiler sandbox."
 }

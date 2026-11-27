@@ -31,10 +31,21 @@ struct HeadSelectionOverlay: View {
                         .highPriorityGesture(drag(in: proxy.size, corner: corner))
                         .position(point(corner, in: displayed))
                 }
+                let labelWidth = min(190, max(1, proxy.size.width - 12))
+                Text(AppText.localized("人脸范围，可拖动调节"))
+                    .font(.caption.bold()).foregroundStyle(.white)
+                    .multilineTextAlignment(.center).padding(.vertical, 5)
+                    .frame(width: labelWidth)
+                    .background(.black.opacity(0.75), in: RoundedRectangle(cornerRadius: 6))
+                    .position(x: min(proxy.size.width - labelWidth / 2 - 6,
+                                     max(labelWidth / 2 + 6, displayed.midX)),
+                              y: displayed.minY >= 48 ? displayed.minY - 24
+                                  : min(proxy.size.height - 24, displayed.maxY + 24))
+                    .allowsHitTesting(false)
             }
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text(AppText.localized("头部定位方框")))
+        .accessibilityLabel(Text(AppText.localized("人脸范围，可拖动调节")))
         .accessibilityValue(Text(AppText.localized(isValid ? "取景范围符合当前规格" : "取景范围不足，请调整")))
         .accessibilityHint(Text(AppText.localized("拖动框内移动，拖动四角缩放；上下调整操作可改变方框大小，也可使用自定操作移动方框。")))
         .accessibilityAdjustableAction { direction in

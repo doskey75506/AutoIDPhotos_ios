@@ -5,6 +5,7 @@ import ImageIO
 import UniformTypeIdentifiers
 
 struct PhotoOutput {
+    let settings: PhotoSettings
     let portrait: UIImage
     let sheet: UIImage
     let portraitJPEG: Data
@@ -92,7 +93,7 @@ final class PhotoProcessor {
         } else {
             warning = nil
         }
-        return PhotoOutput(portrait: portrait, sheet: sheet, portraitJPEG: portraitJPEG, jpeg: sheetJPEG, pdf: pdf, count: layout.count, warning: warning)
+        return PhotoOutput(settings: settings, portrait: portrait, sheet: sheet, portraitJPEG: portraitJPEG, jpeg: sheetJPEG, pdf: pdf, count: layout.count, warning: warning)
     }
 
     private func removeBackground(_ image: UIImage, mode: PhotoSettings.Background, head: HeadPlacement) throws -> UIImage {
@@ -144,16 +145,12 @@ final class PhotoProcessor {
         // a visible cutting boundary. Fill outside the exact photo rectangles.
         UIColor(white: CGFloat(SheetLayout.spacerGray) / 255, alpha: 1).setFill()
         UIRectFill(CGRect(origin: .zero, size: size))
-        for rect in layout.rectangles {
-            let target = CGRect(x: rect.minX / layout.paper.width * size.width,
-                                y: rect.minY / layout.paper.height * size.height,
-                                width: rect.width / layout.paper.width * size.width,
-                                height: rect.height / layout.paper.height * size.height)
+        for target in layout.rectangles(in: size) {
             portrait.draw(in: target)
             // Fine outside cutting guides; never draw a border over the photo.
-            if layout.gap >= 1 {
+            if layout.cutMarkClearance >= 0.5 {
                 let path = UIBezierPath()
-                let length = min(layout.gap / 3, 1) * size.width / layout.paper.width
+                let length = min(layout.cutMarkClearance / 3, 1) * size.width / layout.paper.width
                 for x in [target.minX, target.maxX] {
                     for y in [target.minY, target.maxY] {
                         let dx: CGFloat = x == target.minX ? -1 : 1

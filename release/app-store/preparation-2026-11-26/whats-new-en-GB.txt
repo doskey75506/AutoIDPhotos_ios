@@ -1,2 +1,8 @@
 • Fixed camera preview orientation on affected iPhones, including when switching between the front and rear cameras.
 • The app now starts in Simplified Chinese on Chinese-language devices and English on other devices. Your manual language choice is remembered.
+• Open directly to the camera, then review settings and a short guide before generating.
+• Choose common document-size references or save named custom photo and print settings.
+• The initial face box now includes extra space above and below, with a clear drag-to-adjust label.
+• Print layouts use the selected photo dimensions, paper size and spacing. Added a US passport preset.
+• Print sheets keep at least 0.5 mm between photos and distribute spare space evenly without changing photo size.
+• White is now the default background, with Restore Defaults available. Unavailable photo options are disabled with framing and retake guidance.

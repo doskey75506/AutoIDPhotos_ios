@@ -68,7 +68,9 @@ final class PhotoModel: ObservableObject {
                 }
             }.value
             self.image = result.0
-            placement = result.1
+            // Apply exactly once per loaded photo, including the simulator's
+            // initial manual fallback. Later drag/resize edits are left alone.
+            placement = result.1.expandedForInitialDetection()
             detectionNotice = result.2
         } catch { message = error.localizedDescription }
     }
@@ -77,11 +79,11 @@ final class PhotoModel: ObservableObject {
         return placement.framingError(in: image.size, settings: settings)
     }
 
-    func generate() async {
-        guard let image else { return }
+    func generate(settings requestedSettings: PhotoSettings) async {
+        guard let image, !busy else { return }
         busy = true
         output = nil
-        let settings = settings
+        let settings = requestedSettings
         let placement = placement
         defer { busy = false }
         do {

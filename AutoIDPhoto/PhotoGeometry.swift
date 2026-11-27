@@ -20,12 +20,13 @@ struct PhotoSettings: Codable, Equatable {
     var photoHeight = 45.0
     var headMin = 29.0
     var headMax = 34.0
+    var headTopMargin: Double? = nil
     var paperWidth = 6.0
     var paperHeight = 4.0
     var dpi = 300.0
     var preserveSourceResolution = true
     var gap = 2.0
-    var background = Background.lightGray
+    var background = Background.white
     enum Background: String, Codable, CaseIterable {
         case original = "原始背景", white = "纯白", lightGray = "浅灰", blue = "蓝色", red = "红色"
 
@@ -46,7 +47,7 @@ struct PhotoSettings: Codable, Equatable {
 
     private enum CodingKeys: String, CodingKey {
         case photoWidth, photoHeight, headMin, headMax, paperWidth, paperHeight
-        case dpi, gap, background, preserveSourceResolution
+        case dpi, gap, background, preserveSourceResolution, headTopMargin
     }
 
     init(from decoder: Decoder) throws {
@@ -55,22 +56,29 @@ struct PhotoSettings: Codable, Equatable {
         photoHeight = try values.decodeIfPresent(Double.self, forKey: .photoHeight) ?? 45
         headMin = try values.decodeIfPresent(Double.self, forKey: .headMin) ?? 29
         headMax = try values.decodeIfPresent(Double.self, forKey: .headMax) ?? 34
+        headTopMargin = try values.decodeIfPresent(Double.self, forKey: .headTopMargin)
         paperWidth = try values.decodeIfPresent(Double.self, forKey: .paperWidth) ?? 6
         paperHeight = try values.decodeIfPresent(Double.self, forKey: .paperHeight) ?? 4
         dpi = try values.decodeIfPresent(Double.self, forKey: .dpi) ?? 300
-        gap = try values.decodeIfPresent(Double.self, forKey: .gap) ?? 2
-        background = try values.decodeIfPresent(Background.self, forKey: .background) ?? .lightGray
+        let storedGap = try values.decodeIfPresent(Double.self, forKey: .gap) ?? 2
+        gap = storedGap.isFinite ? max(SheetLayout.minimumGap, storedGap) : storedGap
+        background = try values.decodeIfPresent(Background.self, forKey: .background) ?? .white
         preserveSourceResolution = try values.decodeIfPresent(Bool.self, forKey: .preserveSourceResolution) ?? true
     }
 
     var validationError: String? {
         let values = [photoWidth, photoHeight, headMin, headMax, paperWidth, paperHeight, dpi, gap]
         guard values.allSatisfy({ $0.isFinite }) else { return "请输入有效数字。" }
+        if let margin = headTopMargin {
+            guard margin.isFinite, margin >= 0, margin + headMax < photoHeight else {
+                return "头顶留白须为非负数，且留白与最大头高之和须小于照片高度。"
+            }
+        }
         guard photoWidth >= 10, photoHeight >= 10, photoWidth <= 200, photoHeight <= 200,
               headMin >= 5, headMax >= headMin, headMax < photoHeight,
               paperWidth >= 1, paperWidth <= 12, paperHeight >= 1, paperHeight <= 12,
-              dpi >= 150, dpi <= 600, gap >= 0, gap <= 10 else {
-            return "证件照边长须为 10–200 mm；头高须小于照片高度；纸张须为 1–12 英寸；DPI 须为 150–600；间距须为 0–10 mm。"
+              dpi >= 150, dpi <= 600, gap >= SheetLayout.minimumGap, gap <= 10 else {
+            return "证件照边长须为 10–200 mm；头高须小于照片高度；纸张须为 1–12 英寸；DPI 须为 150–600；最小间距须为 0.5–10 mm。"
         }
         guard layout.count > 0 else { return "打印纸放不下一张证件照，请增大纸张或缩小证件照。" }
         guard preserveSourceResolution || paperWidth * dpi * paperHeight * dpi <= 20_000_000 else { return "输出超过 2000 万像素，请降低 DPI 或纸张尺寸。" }
@@ -79,6 +87,13 @@ struct PhotoSettings: Codable, Equatable {
     var layout: SheetLayout {
         SheetLayout(paper: CGSize(width: paperWidth * 25.4, height: paperHeight * 25.4),
                     photo: CGSize(width: photoWidth, height: photoHeight), gap: gap)
+    }
+
+    /// Shared by disabled options, the confirm button and the actual crop path.
+    func generationError(in imageSize: CGSize?, placement: HeadPlacement) -> String? {
+        if let validationError { return validationError }
+        guard let imageSize else { return "请先拍摄或选择一张照片。" }
+        return placement.framingError(in: imageSize, settings: self)
     }
 }
 
@@ -119,20 +134,61 @@ struct PhotoResolutionPlan {
 
 struct SheetLayout {
     static let spacerGray: UInt8 = 127
+    static let minimumGap = 0.5
     let paper: CGSize
     let photo: CGSize
+    /// Minimum gap, not fixed spacing. Remaining paper is shared evenly.
     let gap: Double
-    var columns: Int { max(0, Int((paper.width + gap) / (photo.width + gap))) }
-    var rows: Int { max(0, Int((paper.height + gap) / (photo.height + gap))) }
+
+    init(paper: CGSize, photo: CGSize, gap: Double) {
+        self.paper = paper
+        self.photo = photo
+        self.gap = gap.isFinite ? max(Self.minimumGap, gap) : gap
+    }
+    // Inch-to-mm conversion can put an exact fit a few floating-point bits below
+    // an integer (e.g. three 50.8 mm photos on 6 inches). Tolerance is in mm.
+    private func capacity(paper: Double, photo: Double) -> Int {
+        guard paper.isFinite, photo.isFinite, gap.isFinite, paper > 0, photo > 0, gap >= 0 else { return 0 }
+        return max(0, Int(floor((paper + gap + 0.0000001) / (photo + gap))))
+    }
+    var columns: Int { capacity(paper: paper.width, photo: photo.width) }
+    var rows: Int { capacity(paper: paper.height, photo: photo.height) }
     var count: Int { columns * rows }
+    private func spacing(paper: Double, photo: Double, count: Int) -> (margin: Double, between: Double) {
+        guard count > 0 else { return (0, 0) }
+        let spare = max(0, paper - Double(count) * photo)
+        guard count > 1 else { return (spare / 2, 0) }
+        // Prefer the same space at the edges and between photos. On a tight
+        // fit, preserve the minimum internal gap and reduce only outer margins.
+        let between = max(gap, spare / Double(count + 1))
+        return (max(0, (spare - Double(count - 1) * between) / 2), between)
+    }
+    var horizontalSpacing: Double { spacing(paper: paper.width, photo: photo.width, count: columns).between }
+    var verticalSpacing: Double { spacing(paper: paper.height, photo: photo.height, count: rows).between }
+    var horizontalMargin: Double { spacing(paper: paper.width, photo: photo.width, count: columns).margin }
+    var verticalMargin: Double { spacing(paper: paper.height, photo: photo.height, count: rows).margin }
+    var cutMarkClearance: Double {
+        min(horizontalMargin, verticalMargin,
+            columns > 1 ? horizontalSpacing / 2 : .infinity,
+            rows > 1 ? verticalSpacing / 2 : .infinity)
+    }
     var rectangles: [CGRect] {
         guard count > 0 else { return [] }
-        let startX = (paper.width - Double(columns) * photo.width - Double(columns - 1) * gap) / 2
-        let startY = (paper.height - Double(rows) * photo.height - Double(rows - 1) * gap) / 2
         return (0..<rows).flatMap { y in (0..<columns).map { x in
-            CGRect(x: startX + Double(x) * (photo.width + gap),
-                   y: startY + Double(y) * (photo.height + gap), width: photo.width, height: photo.height)
+            CGRect(x: horizontalMargin + Double(x) * (photo.width + horizontalSpacing),
+                   y: verticalMargin + Double(y) * (photo.height + verticalSpacing), width: photo.width, height: photo.height)
         } }
+    }
+
+    /// Used by both JPEG and PDF; all placements derive from physical millimetres.
+    func rectangles(in outputSize: CGSize) -> [CGRect] {
+        guard paper.width > 0, paper.height > 0 else { return [] }
+        return rectangles.map { rect in
+            CGRect(x: rect.minX / paper.width * outputSize.width,
+                   y: rect.minY / paper.height * outputSize.height,
+                   width: rect.width / paper.width * outputSize.width,
+                   height: rect.height / paper.height * outputSize.height)
+        }
     }
 }
 
@@ -152,19 +208,29 @@ struct HeadPlacement: Equatable {
         let headPixels = (chin - top) * size.height
         let height = headPixels * settings.photoHeight / ((settings.headMin + settings.headMax) / 2)
         let width = height * settings.photoWidth / settings.photoHeight
+        let cropTop = settings.headTopMargin.map { top * size.height - $0 / settings.photoHeight * height }
+            ?? ((top + chin) / 2 * size.height - height / 2)
         let rect = CGRect(x: centerX * size.width - width / 2,
-                          y: (top + chin) / 2 * size.height - height / 2, width: width, height: height)
+                          y: cropTop, width: width, height: height)
         // Solid backgrounds can supply missing space above the source image.
         // Missing sides or bottom may cut off shoulders and must still be rejected.
-        guard rect.minX >= 0, rect.maxX <= size.width, rect.maxY <= size.height,
-              settings.background != .original || rect.minY >= 0 else {
-            throw PhotoError.message("原图四周空间不足，无法满足当前头高和尺寸要求。请换一张拍摄更远、留白更多的照片，或调整定位及规格。")
+        if settings.background == .original && rect.minY < 0 {
+            throw PhotoError.message("头顶留白不足。请重新拍摄，在头顶上方多留空白；也可选择单色背景补齐顶部。")
+        }
+        if rect.minX < 0 {
+            throw PhotoError.message("左侧空间不足。请重新拍摄，将头部居中并在左侧多留空白。")
+        }
+        if rect.maxX > size.width {
+            throw PhotoError.message("右侧空间不足。请重新拍摄，将头部居中并在右侧多留空白。")
+        }
+        if rect.maxY > size.height {
+            throw PhotoError.message("下方空间不足。请重新拍摄，镜头离远一些，保留完整肩部和胸前空间。")
         }
         if let headWidth = self.width {
             guard headWidth.isFinite, headWidth > 0,
                   (centerX - headWidth / 2) * size.width >= rect.minX,
                   (centerX + headWidth / 2) * size.width <= rect.maxX else {
-                throw PhotoError.message("当前规格会裁掉头部左右边缘，请调整头部方框或证件照尺寸。")
+                throw PhotoError.message("当前规格会裁掉头部两侧。请检查人脸框，或重新拍摄并完整保留头部与双肩。")
             }
         }
         return rect
@@ -212,6 +278,17 @@ enum HeadBoxGeometry {
 }
 
 extension HeadPlacement {
+    /// Expand the initial detected head vertically, without moving its centre horizontally.
+    /// Clip at image edges rather than shifting the opposite edge to compensate.
+    func expandedForInitialDetection() -> HeadPlacement {
+        let height = chin - top
+        guard height.isFinite, height > 0 else { return self }
+        var result = self
+        result.top = max(0, top - height * 0.20)
+        result.chin = min(1, chin + height * 0.10)
+        return result
+    }
+
     func selection(in imageSize: CGSize) -> CGRect {
         let boxWidth = width ?? (chin - top) * imageSize.height / max(1, imageSize.width) * 0.75
         return HeadBoxGeometry.clamped(CGRect(x: centerX - boxWidth / 2, y: top,

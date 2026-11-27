@@ -11,7 +11,7 @@ AutoIDPhoto 1.1 更新发布准备 — 2026-11-27（原准备目录保留）
 
 二、商店文案
 现有 ../1.0/copy-ready.md 包含名称、副标题、促销文字、关键词和完整描述。中英文描述已更新为按系统语言选择默认界面，无需重复改写全部文案。
-更新版的“此版本新增内容”：使用本目录 whats-new-en-GB.txt、whats-new-zh-Hans.txt。它们仅描述本次相机方向和默认语言改动；若实际已上线版本更旧，发布前还需补齐其余差异。
+更新版的“此版本新增内容”：使用本目录 whats-new-en-GB.txt、whats-new-zh-Hans.txt。它们描述相机方向、默认语言、拍摄后确认流程、证件规格与命名手工参数、初始方框、白色默认背景、规格可用性提示及打印排版改动；发布前仍需核对实际已上线版本与待提交 build 的差异。
 以上更新说明是面向用户的变更描述，不是已完成真机验证的证明。
 
 三、审核备注与回复
@@ -33,7 +33,7 @@ iPad 13 英寸截图包：../../screenshots/AutoIDPhoto-iPad13-2064x2752.zip
 开发者：Mobile Soft；邮箱：shenok.smth@gmail.com。
 
 五、本次发布前需要完成的证据
-现有检查：1254 项检查通过，iPhoneOS/iPhoneSimulator 全部 Swift 源码类型检查通过；完整构建受当前环境 CoreMLModelCompile sandbox_apply 限制，未成功归档。
+本轮最终几何、预设、排版与双语资源检查共 4234 项通过；本轮主体修改后的 iPhoneOS/iPhoneSimulator 全部 Swift 源码类型检查通过，最后仅调整初始方框下扩比例至 10% 并更新测试/文档。完整构建受当前环境 CoreMLModelCompile sandbox_apply 限制，未成功归档；没有真机交互验收结论。
 请在普通 Xcode 环境归档，并在实际提交 build 上验证：竖屏预览、前后摄切换、横竖屏切换、拍照后的原图方向、默认语言/手动偏好、导入、生成、单张与打印版分享。记录准确设备型号、系统和 build。
 MODNet：审核主文案包含上游许可证链接；本地所用权重的来源/授权及所需许可证随包材料仍需完成核对，不能仅凭文字声明已获授权。
 
@@ -43,3 +43,8 @@ MODNet：审核主文案包含上游许可证链接；本地所用权重的来�
 上传 build：https://developer.apple.com/help/app-store-connect/manage-builds/upload-builds
 审核消息：https://developer.apple.com/help/app-store-connect/manage-submissions-to-app-review/reply-to-app-review-messages/
 未解决事项重提：https://developer.apple.com/help/app-store-connect/manage-submissions-to-app-review/manage-a-submission-with-unresolved-issues/
+
+2026-11-27 功能流程更新
+App 现在直接进入拍摄页。载入或拍摄后调整人脸范围，点“生成照片”才打开预设/手工参数与简要说明，点“确定并生成”开始处理。确认页支持应用规格后返回调整取景。
+本目录中英文更新说明和审核补充草稿已同步。此前设置页/启动页截图与本次流程可能不一致，需要重新截取当前 App 实际画面。规格依据、适用范围及真实交互回归步骤见项目 README 的“证件裁切参考与来源”。
+工程仍保留 Version 1.1 / Build 2；若 build 2 已上传 Connect，此次重新归档前必须递增 Build。新功能尚未完成设备端交互验收，不将代码类型检查视为真机测试。
